@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODO application</title>
+</head>
+<body>
+    {% block body %}
+        <form action="/" method="post">
+            <label for="description">Description</label>
+            <input type="text" name="description"><br>
+            <label for="start_date">Start Date</label>
+            <input type="date" name="start_date" required><br>
+            <label for="due_date">Due Date</label>
+            <input type="date" name="due_date" required><br>
+            <input type="submit" value="Add Task">
+        </form>
+
+        {% if tasks|length %}
+        <table>
+            <thead>
+                <td>Description</td>
+                <td>Start Date</td>
+                <td>Due Date</td>
+                <td>Completed</td>
+            </thead>
+            {% for task in tasks %}
+                <tr>
+                    <td>
+                        {{ task.description }}
+                    </td>
+                    <td>
+                        {{ task.start_date }}
+                    </td>
+                    <td>
+                        {{ task.due_date }}
+                    </td>
+                    <td>
+                        {{ task.completed }}
+                    </td>
+                    <td>
+                        <form action="/delete/{{ task.id }}" method="post">
+                            <input type="submit" value="Delete">
+                        </form>
+                    </td>
+                    <td>
+                        <form action="/update/{{ task.id }}" method="post">
+                            <input type="submit" value="Update">
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+    {% endblock %}
+</body>
+</html>
